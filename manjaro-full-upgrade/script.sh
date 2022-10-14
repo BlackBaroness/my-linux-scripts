@@ -70,7 +70,7 @@ clean_bleachbit() {
 }
 
 trim_ssd() {
-  sudo fstrim /
+  sudo fstrim --all --verbose --quiet-unsupported
 }
 
 main() {

@@ -48,6 +48,10 @@ clean_sdkman() {
   sdk flush
 }
 
+update_mirrors() {
+  sudo pacman-mirrors --fasttrack 15 --api --protocols all
+}
+
 upgrade_pamac() {
   side_log "Upgrading both normal and AUR packages..."
   pamac update --no-confirm --force-refresh --enable-downgrade --aur --devel
@@ -84,6 +88,9 @@ main() {
     wide_log "Running SDKMAN! cleanup..."
     clean_sdkman
   fi
+
+  wide_log "Updating mirror list..."
+  update_mirrors
 
   wide_log "Upgrading pamac packages..."
   upgrade_pamac

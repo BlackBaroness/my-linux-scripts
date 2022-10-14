@@ -66,10 +66,10 @@ clean_pamac() {
 }
 
 clean_bleachbit() {
-  side_log "Running bleachbit as current user..."
+  side_log "Running BleachBit as current user..."
   sudo bleachbit --clean firefox.cache firefox.crash_reports firefox.vacuum firefox.backup discord.vacuum discord.cache system.cache system.clipboard system.desktop_entry system.recent_documents system.rotated_logs system.tmp system.trash thumbnails.cache journald.clean system.localizations
 
-  side_log "Running bleachbit as root..."
+  side_log "Running BleachBit as root..."
   bleachbit --clean firefox.cache firefox.crash_reports firefox.vacuum firefox.backup discord.vacuum discord.cache system.cache system.clipboard system.desktop_entry system.recent_documents system.rotated_logs system.tmp system.trash thumbnails.cache journald.clean system.localizations
 }
 
@@ -77,34 +77,77 @@ trim_ssd() {
   sudo fstrim --all --verbose --quiet-unsupported
 }
 
+skipSdkman=
+skipMirrorList=
+skipPamacUpgrade=
+skipPamacCleanup=
+skipBleachbit=
+skipTrim=
+
 main() {
   wide_log "Checking requirements..."
   check_requirements
 
-  if sdkman_available; then
-    enable_sdkman
-    wide_log "SDKMAN! found. Running upgrade for it..."
-    upgrade_sdkman
-    wide_log "Running SDKMAN! cleanup..."
-    clean_sdkman
+  if [ "$skipSdkman" ]; then
+    side_log "SDKMAN! upgrade disabled, skipping..."
+  else
+    if sdkman_available; then
+      enable_sdkman
+      wide_log "SDKMAN! found. Running upgrade for it..."
+      upgrade_sdkman
+      wide_log "Running SDKMAN! cleanup..."
+      clean_sdkman
+    fi
   fi
 
-  wide_log "Updating mirror list..."
-  update_mirrors
+  if [ "$skipMirrorList" ]; then
+    side_log "Mirrorlist update disabled, skipping..."
+  else
+    wide_log "Updating mirror list..."
+    update_mirrors
+  fi
 
-  wide_log "Upgrading pamac packages..."
-  upgrade_pamac
+  if [ "$skipPamacUpgrade" ]; then
+    side_log "Pamac upgrade disabled, skipping..."
+  else
+    wide_log "Upgrading pamac packages..."
+    upgrade_pamac
+  fi
 
-  wide_log "Cleaning pamac..."
-  clean_pamac
+  if [ "$skipPamacCleanup" ]; then
+    side_log "Pamac cleanup disabled, skipping..."
+  else
+    wide_log "Cleaning pamac..."
+    clean_pamac
+  fi
 
-  wide_log "Cleaning system via Bleachbit..."
-  clean_bleachbit
+  if [ "$skipBleachbit" ]; then
+    side_log "BleachBit disabled, skipping..."
+  else
+    wide_log "Cleaning system via BleachBit..."
+    clean_bleachbit
+  fi
 
-  wide_log "Running TRIM at SSD (if supported)..."
-  trim_ssd
+  if [ "$skipTrim" ]; then
+    side_log "TRIM disabled, skipping..."
+  else
+    wide_log "Running TRIM at SSD (if supported)..."
+    trim_ssd
+  fi
 
   wide_log "Upgrade completed!"
 }
+
+options=$*
+for argument in $options; do
+  case $argument in
+  --skip-sdkman) skipSdkman=true ;;
+  --skip-mirrorlist) skipMirrorList=true ;;
+  --skip-pamac-upgrade) skipPamacUpgrade=true ;;
+  --skip-pamac-cleanup) skipPamacCleanup=true ;;
+  --skip-bleachbit) skipBleachbit=true ;;
+  --skip-trim) skipTrim=true ;;
+  esac
+done
 
 main

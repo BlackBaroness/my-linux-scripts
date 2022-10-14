@@ -2,16 +2,34 @@ This script allows you to make full upgrade on Manjaro.
 Some parts can be used on other distros but I use `pamac-cli` as package manager,
 so you have to install it.
 
-Steps:
+### Steps:
 1. Check requirements and fail if some of them are missing.
 2. If [SDKMAN!](https://sdkman.io/) installed, upgrade and clean it.
 3. Update mirrors list.
 4. Upgrade all pamac packages.
 5. Clean pamac orphans and installation caches.
-6. Clean system with bleachbit (current user + root).
+6. Clean system with BleachBit (current user + root).
 7. Send TRIM to all mounted SSDs (if supported).
 
-Requirements:
+### Requirements:
 1. Do not run script as root.
 2. You have to know root password (it will ask for it several times).
-3. You have to install `pamac-cli` (installed in Manjaro by default) and [bleachbit](https://www.bleachbit.org/).
+3. You have to install `pamac-cli` (installed in Manjaro by default) and [BleachBit](https://www.bleachbit.org/).
+
+### Configuration:
+- `--skip-sdkman` do not touch SDKMAN! at all.
+- `--skip-mirrorlist` do not update mirrorlist.
+- `--skip-pamac-upgrade` do not upgrade pamac packages.
+- `--skip-pamac-cleanup` do not clean pamac orphans and installation caches.
+- `--skip-bleachbit` do not run BleachBit.
+- `--skip-trim` prevent TRIM from being sent to SSDs.
+
+### Usage:
+By default, everything is enabled, but usually you need something like this:
+```bash
+wget -O full-upgrade.sh https://github.com/BlackBaroness/my-linux-scripts/raw/master/manjaro-full-upgrade/script.sh
+chmod +x full-upgrade.sh
+./full-upgrade.sh --skip-mirrorlist --skip-trim
+```
+
+Why? Usually you don't need to update mirrorlist and also frequently TRIM usage can be harmful for your SSD.

@@ -4,7 +4,7 @@ so you have to install it.
 
 ### Steps:
 1. Check requirements and fail if some of them are missing.
-2. If [SDKMAN!](https://sdkman.io/) installed, upgrade and clean it.
+2. If [SDKMAN](https://sdkman.io/) installed, upgrade and clean it.
 3. Update mirrors list.
 4. Upgrade all pamac packages.
 5. Clean pamac orphans and installation caches.
@@ -17,7 +17,7 @@ so you have to install it.
 3. You have to install `pamac-cli` (installed in Manjaro by default) and [BleachBit](https://www.bleachbit.org/).
 
 ### Configuration:
-- `--skip-sdkman` don't touch SDKMAN! at all.
+- `--skip-sdkman` don't touch SDKMAN at all.
 - `--skip-mirrorlist` don't update mirrorlist.
 - `--skip-pamac-upgrade` don't upgrade pamac packages.
 - `--skip-pamac-cleanup` don't clean pamac orphans and installation caches.

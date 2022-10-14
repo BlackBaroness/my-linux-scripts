@@ -40,8 +40,14 @@ enable_sdkman() {
 }
 
 upgrade_sdkman() {
-  sdk upgrade
+  side_log "Updating SDKMAN itself..."
+  sdk selfupdate
+
+  side_log "Updating SDKMAN candidates list..."
   sdk update
+
+  side_log "Upgrading outdated SDKMAN candidates..."
+  sdk upgrade
 }
 
 clean_sdkman() {
@@ -89,13 +95,13 @@ main() {
   check_requirements
 
   if [ "$skipSdkman" ]; then
-    side_log "SDKMAN! upgrade disabled, skipping..."
+    side_log "SDKMAN upgrade disabled, skipping..."
   else
     if sdkman_available; then
       enable_sdkman
-      wide_log "SDKMAN! found. Running upgrade for it..."
+      wide_log "SDKMAN found. Running upgrade for it..."
       upgrade_sdkman
-      wide_log "Running SDKMAN! cleanup..."
+      wide_log "Running SDKMAN cleanup..."
       clean_sdkman
     fi
   fi

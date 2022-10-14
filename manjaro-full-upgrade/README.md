@@ -17,12 +17,12 @@ so you have to install it.
 3. You have to install `pamac-cli` (installed in Manjaro by default) and [BleachBit](https://www.bleachbit.org/).
 
 ### Configuration:
-- `--skip-sdkman` do not touch SDKMAN! at all.
-- `--skip-mirrorlist` do not update mirrorlist.
-- `--skip-pamac-upgrade` do not upgrade pamac packages.
-- `--skip-pamac-cleanup` do not clean pamac orphans and installation caches.
-- `--skip-bleachbit` do not run BleachBit.
-- `--skip-trim` prevent TRIM from being sent to SSDs.
+- `--skip-sdkman` don't touch SDKMAN! at all.
+- `--skip-mirrorlist` don't update mirrorlist.
+- `--skip-pamac-upgrade` don't upgrade pamac packages.
+- `--skip-pamac-cleanup` don't clean pamac orphans and installation caches.
+- `--skip-bleachbit` don't run BleachBit.
+- `--skip-trim` don't send TRIM to SSDs.
 
 ### Usage:
 By default, everything is enabled, but usually you need something like this:
@@ -32,4 +32,4 @@ chmod +x full-upgrade.sh
 ./full-upgrade.sh --skip-mirrorlist --skip-trim
 ```
 
-Why? Usually you don't need to update mirrorlist and also frequently TRIM usage can be harmful for your SSD.
+Why? Usually you don't need to update mirrorlist and also [frequently TRIM usage can be harmful for your SSD](https://man7.org/linux/man-pages/man8/fstrim.8.html).

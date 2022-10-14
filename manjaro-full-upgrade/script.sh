@@ -2,13 +2,14 @@
 
 wide_log() {
   echo ""
-  echo "============================ ${1} ==============================================================" | rev | cut -c"$(expr length "$1")"- | rev
+  # shellcheck disable=SC2003
+  echo "============================ ${1} ==========================================================================================" | rev | cut -c"$(expr length "$1")"- | rev
   echo ""
 }
 
 side_log() {
   echo ""
-  echo "=====> ${1}"
+  echo "==========> ${1}"
   echo ""
 }
 
@@ -24,7 +25,7 @@ check_requirements() {
   fi
 
   if ! command -v bleachbit >/dev/null; then
-    side_log "bleachbit not found. Please install it first."
+    side_log "BleachBit not found. Please install it first."
     exit 1
   fi
 }

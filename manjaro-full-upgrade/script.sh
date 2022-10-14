@@ -49,7 +49,7 @@ clean_sdkman() {
 }
 
 update_mirrors() {
-  sudo pacman-mirrors --fasttrack 15 --api --protocols all
+  sudo pacman-mirrors --fasttrack --api --protocols all
 }
 
 upgrade_pamac() {
@@ -67,10 +67,10 @@ clean_pamac() {
 
 clean_bleachbit() {
   side_log "Running BleachBit as current user..."
-  sudo bleachbit --clean firefox.cache firefox.crash_reports firefox.vacuum firefox.backup discord.vacuum discord.cache system.cache system.clipboard system.desktop_entry system.recent_documents system.rotated_logs system.tmp system.trash thumbnails.cache journald.clean system.localizations
+  bleachbit --clean firefox.cache firefox.crash_reports firefox.vacuum firefox.backup discord.vacuum discord.cache system.cache system.clipboard system.desktop_entry system.recent_documents system.rotated_logs system.tmp system.trash thumbnails.cache journald.clean system.localizations
 
   side_log "Running BleachBit as root..."
-  bleachbit --clean firefox.cache firefox.crash_reports firefox.vacuum firefox.backup discord.vacuum discord.cache system.cache system.clipboard system.desktop_entry system.recent_documents system.rotated_logs system.tmp system.trash thumbnails.cache journald.clean system.localizations
+  sudo bleachbit --clean firefox.cache firefox.crash_reports firefox.vacuum firefox.backup discord.vacuum discord.cache system.cache system.clipboard system.desktop_entry system.recent_documents system.rotated_logs system.tmp system.trash thumbnails.cache journald.clean system.localizations
 }
 
 trim_ssd() {

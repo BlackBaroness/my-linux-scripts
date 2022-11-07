@@ -54,7 +54,7 @@ clean_sdkman() {
 }
 
 update_mirrors() {
-  sudo pacman-mirrors --fasttrack --api --protocols all
+  sudo pacman-mirrors --fasttrack --timeout 2
 }
 
 upgrade_pamac() {

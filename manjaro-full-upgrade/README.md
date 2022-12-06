@@ -4,12 +4,13 @@ so you have to install it.
 
 ### Steps:
 1. Check requirements and fail if some of them are missing.
-2. If [SDKMAN](https://sdkman.io/) installed, upgrade and clean it.
-3. Update mirrors list.
-4. Upgrade all pamac packages.
-5. Clean pamac orphans and installation caches.
-6. Clean system with BleachBit (current user + root).
-7. Send TRIM to all mounted SSDs (if supported).
+2. If [Ferium](https://github.com/gorilla-devs/ferium) is installed, run upgrade for current profile.
+3. If [SDKMAN](https://sdkman.io/) is installed, upgrade and clean it.
+4. Update mirrors list.
+5. Upgrade all pamac packages.
+6. Clean pamac orphans and installation caches.
+7. Clean system with BleachBit (current user + root).
+8. Send TRIM to all mounted SSDs (if supported).
 
 ### Requirements:
 1. Do not run script as root.
@@ -17,6 +18,7 @@ so you have to install it.
 3. You have to install `pamac-cli` (installed in Manjaro by default) and [BleachBit](https://www.bleachbit.org/).
 
 ### Configuration:
+- `--skip-ferium` don't touch Ferium at all.
 - `--skip-sdkman` don't touch SDKMAN at all.
 - `--skip-mirrorlist` don't update mirrorlist.
 - `--skip-pamac-upgrade` don't upgrade pamac packages.

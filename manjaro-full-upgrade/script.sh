@@ -30,6 +30,18 @@ check_requirements() {
   fi
 }
 
+# ============================ Ferium
+
+ferium_available() {
+  if command -v pamac >/dev/null; then return; else false; fi;
+}
+
+upgrade_ferium() {
+  ferium upgrade
+}
+
+# ============================ SDKMAN
+
 sdkman_available() {
   if test -f "$HOME/.sdkman/bin/sdkman-init.sh"; then return; else false; fi
 }
@@ -53,8 +65,10 @@ clean_sdkman() {
   sdk flush
 }
 
+# ============================ Pamac
+
 update_mirrors() {
-  sudo pacman-mirrors --fasttrack --api --protocols all
+  sudo pacman-mirrors --fasttrack --timeout 2
 }
 
 upgrade_pamac() {
@@ -70,6 +84,8 @@ clean_pamac() {
   pamac clean --no-confirm --verbose --build-files --keep 0
 }
 
+# ============================ BleachBit
+
 clean_bleachbit() {
   side_log "Running BleachBit as current user..."
   bleachbit --clean firefox.cache firefox.crash_reports firefox.vacuum firefox.backup discord.vacuum discord.cache system.cache system.clipboard system.desktop_entry system.recent_documents system.rotated_logs system.tmp system.trash thumbnails.cache journald.clean system.localizations
@@ -78,11 +94,16 @@ clean_bleachbit() {
   sudo bleachbit --clean firefox.cache firefox.crash_reports firefox.vacuum firefox.backup discord.vacuum discord.cache system.cache system.clipboard system.desktop_entry system.recent_documents system.rotated_logs system.tmp system.trash thumbnails.cache journald.clean system.localizations
 }
 
+# ============================ Trim
+
 trim_ssd() {
   sudo fstrim --all --verbose --quiet-unsupported
 }
 
+# ===========================================
+
 skipSdkman=
+skipFerium=
 skipMirrorList=
 skipPamacUpgrade=
 skipPamacCleanup=
@@ -92,6 +113,15 @@ skipTrim=
 main() {
   wide_log "Checking requirements..."
   check_requirements
+
+  if [ "$skipFerium" ]; then
+      side_log "Ferium upgrade disabled, skipping..."
+    else
+      if ferium_available; then
+        wide_log "Ferium found. Running upgrade for it..."
+        upgrade_ferium
+      fi
+    fi
 
   if [ "$skipSdkman" ]; then
     side_log "SDKMAN upgrade disabled, skipping..."
@@ -147,6 +177,7 @@ options=$*
 for argument in $options; do
   case $argument in
   --skip-sdkman) skipSdkman=true ;;
+  --skip-ferium) skipFerium=true ;;
   --skip-mirrorlist) skipMirrorList=true ;;
   --skip-pamac-upgrade) skipPamacUpgrade=true ;;
   --skip-pamac-cleanup) skipPamacCleanup=true ;;

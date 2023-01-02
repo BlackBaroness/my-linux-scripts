@@ -29,9 +29,7 @@ so you have to install it.
 ### Usage:
 By default, everything is enabled, but usually you need something like this:
 ```bash
-wget -O full-upgrade.sh https://github.com/BlackBaroness/my-linux-scripts/raw/master/manjaro-full-upgrade/script.sh
-chmod +x full-upgrade.sh
-./full-upgrade.sh --skip-mirrorlist --skip-trim
+curl -s -L https://github.com/BlackBaroness/my-linux-scripts/raw/master/manjaro-full-upgrade/script.sh | bash -s -- --skip-trim
 ```
 
-Why? Usually you don't need to update mirrorlist and also [frequently TRIM usage can be harmful for your SSD](https://man7.org/linux/man-pages/man8/fstrim.8.html).
+Please note that [frequently TRIM usage can be harmful for your SSD](https://man7.org/linux/man-pages/man8/fstrim.8.html).

@@ -39,7 +39,7 @@ for argument in $options; do
   --skip-pamac) skip_pamac=true ;;
   --skip-pamac-upgrade) skip_pamac_upgrade=true ;;
   --skip-pamac-cleanup) skip_pamac_cleanup=true ;;
-  --skip-pacman_mirrors) skip_pacman_mirrors=true ;;
+  --skip-pacman-mirrors) skip_pacman_mirrors=true ;;
   --skip-ferium) skip_ferium=true ;;
   --skip-sdkman) skip_sdkman=true ;;
   --skip-sdkman-selfupdate) skip_sdkman_selfupdate=true ;;
@@ -167,7 +167,9 @@ pamac_cleanup() {
     side_log "Pamac | Cleanup is skipped..."
   else
     command_log "Pamac" "pamac remove --no-confirm --orphans"
+    set +e
     pamac remove --no-confirm --orphans
+    set -e
     command_log "Pamac" "pamac clean --no-confirm --verbose --build-files --keep 0"
     pamac clean --no-confirm --verbose --build-files --keep 0
   fi

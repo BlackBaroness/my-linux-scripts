@@ -77,7 +77,7 @@ access to script, you can disable all commands that require superuser access via
 You can run this script without saving to disk with something like this:
 
 ```bash
-curl -s -L https://github.com/BlackBaroness/my-linux-scripts/raw/master/full-upgrade/script.sh | bash -s -- --skip-trim
+curl -s -L https://github.com/BlackBaroness/my-linux-scripts/raw/master/full-upgrade/script.sh | bash -s -- --skip-fstrim
 ```
 
 Please note

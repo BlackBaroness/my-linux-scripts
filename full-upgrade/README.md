@@ -7,15 +7,13 @@ Distro independent customizable system upgrade script, written with Bash.
 2. **[Pamac](https://wiki.manjaro.org/index.php/Pamac) - package manager.** It updates packages and cleaning orphans &
    caches (AUR included).
 3. **[pacman-mirrors](https://wiki.manjaro.org/index.php/Pacman-mirrors) - mirror updater for Manjaro.** It searches for
-   best mirrors available.
+   the best mirrors available.
 4. **[Ferium](https://github.com/gorilla-devs/ferium) - Minecraft mod manager.** It updates mods (only for selected
    profile).
-5. **[SDKMAN](https://sdkman.io/) - SDK manager.** It updates downloaded SDKs and cleans cache.
-6. **[BleachBit](https://www.bleachbit.org/) - system cleaning software.** It cleans a lot of junk from many
-   applications.
-7. **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility.** Included in the Linux kernel.
+5. **[SDKMAN](https://sdkman.io/) - SDK manager.** It updates downloaded SDKs and clean cache.
+6. **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility.** Included in the Linux kernel.
 
-**You don't need to install anything to run this script - unavailable software will be just ignored.**
+**You don't need to install anything to run this script — unavailable software will be just ignored.**
 
 ### `sudo` policy
 
@@ -29,7 +27,7 @@ access to script, you can disable all commands that require superuser access via
 
 **Common:**
 
-- `--allow-root` allow running script as root.
+- `--allow-root` allow a running script as root.
 - `--avoid-sudo` don't call commands that potentially will require superuser password, such as `sudo`.
 
 **APT:**
@@ -48,7 +46,7 @@ access to script, you can disable all commands that require superuser access via
 
 **pacman-mirrors:**
 
-- `--skip-pacman-mirrors` do not update mirrors list.
+- `--skip-pacman-mirrors` do not update a mirrors list.
 
 **Ferium:**
 
@@ -61,12 +59,6 @@ access to script, you can disable all commands that require superuser access via
 - `--skip-sdkman-update` do not update SDKMAN candidates list.
 - `--skip-sdkman-upgrade` do not upgrade SDKMAN candidates.
 - `--skip-sdkman-clean` do not clean SDKMAN.
-
-**BleachBit:**
-
-- `--skip-bleachbit` do not touch BleachBit at all.
-- `--skip-bleachbit-current` do not run BleachBit with current user.
-- `--skip-bleachbit-sudo` do not run BleachBit with `sudo`.
 
 **fstrim:**
 

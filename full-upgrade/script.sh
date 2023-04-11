@@ -21,9 +21,6 @@ skip_sdkman_selfupdate=false
 skip_sdkman_update=false
 skip_sdkman_upgrade=false
 skip_sdkman_clean=false
-skip_bleachbit=false
-skip_bleachbit_current=false
-skip_bleachbit_sudo=false
 skip_fstrim=false
 
 options=$*
@@ -46,9 +43,6 @@ for argument in $options; do
   --skip-sdkman-update) skip_sdkman_update=true ;;
   --skip-sdkman-upgrade) skip_sdkman_upgrade=true ;;
   --skip-sdkman-clean) skip_sdkman_clean=true ;;
-  --skip-bleachbit) skip_bleachbit=true ;;
-  --skip-bleachbit-current) skip_bleachbit_current=true ;;
-  --skip-bleachbit-sudo) skip_bleachbit_sudo=true ;;
   --skip-fstrim) skip_fstrim=true ;;
   *) echo "Unknown option $argument" >&2 && exit 1 ;;
   esac
@@ -256,34 +250,6 @@ sdkman_clean() {
   fi
 }
 
-# BleachBit
-
-run_bleachbit() {
-  if $skip_bleachbit; then
-    side_log "BleachBit is skipped..."
-  elif ! command -v bleachbit >/dev/null; then
-    side_log "BleachBit is not installed, skipping..."
-  else
-    # Current user
-    if $skip_bleachbit_current; then
-      side_log "BleachBit | Run with current user is skipped..."
-    else
-      command_log "BleachBit" "bleachbit --clean firefox.cache firefox.crash_reports firefox.vacuum firefox.backup discord.vacuum discord.cache system.cache system.clipboard system.desktop_entry system.recent_documents system.rotated_logs system.tmp system.trash thumbnails.cache journald.clean system.localizations"
-      bleachbit --clean firefox.cache firefox.crash_reports firefox.vacuum firefox.backup discord.vacuum discord.cache system.cache system.clipboard system.desktop_entry system.recent_documents system.rotated_logs system.tmp system.trash thumbnails.cache journald.clean system.localizations
-    fi
-
-    # Sudo
-    if $skip_bleachbit_sudo; then
-      side_log "BleachBit | Run with sudo is skipped..."
-    elif $avoid_sudo; then
-      side_log "BleachBit | Run with sudo is skipped because you avoid sudo..."
-    else
-      command_log "BleachBit" "sudo bleachbit --clean firefox.cache firefox.crash_reports firefox.vacuum firefox.backup discord.vacuum discord.cache system.cache system.clipboard system.desktop_entry system.recent_documents system.rotated_logs system.tmp system.trash thumbnails.cache journald.clean system.localizations"
-      sudo bleachbit --clean firefox.cache firefox.crash_reports firefox.vacuum firefox.backup discord.vacuum discord.cache system.cache system.clipboard system.desktop_entry system.recent_documents system.rotated_logs system.tmp system.trash thumbnails.cache journald.clean system.localizations
-    fi
-  fi
-}
-
 # fstrim
 
 run_fstrim() {
@@ -320,9 +286,6 @@ main() {
 
   wide_log "Running SDKMAN"
   run_sdkman
-
-  wide_log "Running BleachBit"
-  run_bleachbit
 
   wide_log "Running fstrim"
   run_fstrim

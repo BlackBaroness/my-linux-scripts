@@ -170,7 +170,7 @@ pamac_cleanup() {
     set +e
     pamac remove --no-confirm --orphans
     set -e
-    command_log "Pamac" "pamac clean --no-confirm --verbose --build-files --keep 0"
+    command_log "Pamac" "pamac clean --no-confirm --verbose --build-files"
     pamac clean --no-confirm --verbose --build-files --keep 0
   fi
 }

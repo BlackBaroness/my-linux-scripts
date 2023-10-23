@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Fail if any error occurred
-set -e
+set -eu
 
 function main() {
   wide_log "Checking configuration..."
@@ -263,7 +263,7 @@ function flatpak_update() {
   if $config_skip_flatpak_update; then
     side_log "Flatpak | Update is skipped."
   else
-    run_command "Flatpak" "sudo flatpak -y"
+    run_command "Flatpak" "sudo flatpak update -y"
   fi
 }
 
@@ -306,7 +306,7 @@ function pamac_cleanup() {
   else
     set +e
     run_command "Pamac" "pamac remove --no-confirm --orphans"
-    set -e
+    set -eu
     run_command "Pamac" "pamac clean --no-confirm --verbose --build-files --keep 0"
   fi
 }
@@ -508,8 +508,6 @@ function run_fstrim() {
     run_command "fstrim" "sudo fstrim --all --verbose --quiet-unsupported"
   fi
 }
-
-
 
 # ===========================================
 

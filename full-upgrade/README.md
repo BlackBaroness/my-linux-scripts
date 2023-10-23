@@ -9,16 +9,18 @@ Distro independent customizable system upgrade script, written with Bash.
    Script searches for the best mirrors available.
 4. Runs **[Pamac](https://wiki.manjaro.org/index.php/Pamac) - package manager for Manjaro.**
    Script updates packages and cleans orphans & caches (AUR included).
-5. Runs **[Ferium](https://github.com/gorilla-devs/ferium) - Minecraft mod manager.**
+5. Runs **[Flatpak](https://flatpak.org/) - package manager.**
+   Script updates packages and removed unused dependencies.
+6. Runs **[Ferium](https://github.com/gorilla-devs/ferium) - Minecraft mod manager.**
    Script updates mods (only for selected profile - ferium restriction).
-6. Runs **[SDKMAN](https://sdkman.io/) - SDK manager.**
+7. Runs **[SDKMAN](https://sdkman.io/) - SDK manager.**
    Script updates downloaded SDKs and clean cache.
    Also updates SDKMAN itself.
-7. Runs **[BleachBit](https://www.bleachbit.org/) - system cleaning software.**
+8. Runs **[BleachBit](https://www.bleachbit.org/) - system cleaning software.**
    Script cleans a lot of junk from many applications.
    It uses all available clean options which **will not delete sensitive data**, like browser sessions.
    Only junk.
-8. Runs **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility, included in the Linux kernel.**
+9. Runs **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility, included in the Linux kernel.**
    Script sends TRIM to the all supported devices, ignoring unsupported ones.
 
 **You don't need to install anything to run this script; unavailable software will be just ignored.**
@@ -51,15 +53,21 @@ access to script, you can disable all commands that require superuser access via
 - `--skip-zypper-ref` do not run `zypper ref`.
 - `--skip-zypper-upgrade` do not run `zypper dist-upgrade`.
 
+**pacman-mirrors:**
+
+- `--skip-pacman-mirrors` do not update a mirrors list.
+
 **Pamac:**
 
 - `--skip-pamac` do not touch Pamac at all.
 - `--skip-pamac-upgrade` do not upgrade Pamac packages.
 - `--skip-pamac-cleanup` do not clean Pamac orphans and installation caches.
 
-**pacman-mirrors:**
+**Flatpak:**
 
-- `--skip-pacman-mirrors` do not update a mirrors list.
+- `--skip-flatpak` do not touch Flatpak at all.
+- `--skip-flatpak-update` do not touch update packages.
+- `--skip-flatpak-remove-unused` do not remove unused dependencies.
 
 **Ferium:**
 

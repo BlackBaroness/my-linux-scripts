@@ -22,6 +22,9 @@ function main() {
   wide_log "Running pamac..."
   run_pamac
 
+  wide_log "Running Flatpak..."
+  run_flatpak
+
   wide_log "Running ferium..."
   run_ferium
 
@@ -69,6 +72,9 @@ function load_configuration() {
     global config_skip_pamac_upgrade=false
     global config_skip_pamac_cleanup=false
     global config_skip_pacman_mirrors=false
+    global config_skip_flatpak=false
+    global config_skip_flatpak_update=false
+    global config_skip_flatpak_remove_unused=false
     global config_skip_ferium=false
     global config_skip_sdkman=false
     global config_skip_sdkman_selfupdate=false
@@ -93,10 +99,13 @@ function load_configuration() {
       --skip-zypper) config_skip_zypper=true ;;
       --skip-zypper-ref) config_skip_zypper_ref=true ;;
       --skip-zypper-upgrade) config_skip_zypper_upgrade=true ;;
+      --skip-pacman-mirrors) config_skip_pacman_mirrors=true ;;
       --skip-pamac) config_skip_pamac=true ;;
       --skip-pamac-upgrade) config_skip_pamac_upgrade=true ;;
       --skip-pamac-cleanup) config_skip_pamac_cleanup=true ;;
-      --skip-pacman-mirrors) config_skip_pacman_mirrors=true ;;
+      --skip-flatpak) config_skip_flatpak=true ;;
+      --skip-flatpak-update) config_skip_flatpak_update=true ;;
+      --skip-flatpak-remove-unused) config_skip_flatpak_remove_unused=true ;;
       --skip-ferium) config_skip_ferium=true ;;
       --skip-sdkman) config_skip_sdkman=true ;;
       --skip-sdkman-selfupdate) config_skip_sdkman_selfupdate=true ;;
@@ -187,14 +196,12 @@ function run_zypper() {
   elif $config_avoid_sudo; then
     side_log "Zypper not available because you avoid commands with sudo."
   else
-    apt_update
-    apt_upgrade
-    apt_autoremove
-    apt_clean
+    zypper_refresh
+    zypper_upgrade
   fi
 }
 
-function zypper_ref() {
+function zypper_refresh() {
   if $config_skip_zypper_ref; then
     side_log "Zypper | Refresh is skipped."
   else
@@ -207,6 +214,39 @@ function zypper_upgrade() {
     side_log "Zypper | Update is skipped."
   else
     run_command "Zypper" "sudo zypper dist-upgrade -y"
+  fi
+}
+
+# =================================================================
+# Flatpak
+# =================================================================
+
+function run_flatpak() {
+  if $config_skip_flatpak; then
+    side_log "Flatpak is skipped."
+  elif ! command -v flatpak >/dev/null; then
+    side_log "Flatpak is not installed, skipping..."
+  elif $config_avoid_sudo; then
+    side_log "Flatpak not available because you avoid commands with sudo."
+  else
+    flatpak_update
+    flatpak_remove_unused
+  fi
+}
+
+function flatpak_update() {
+  if $config_skip_flatpak_update; then
+    side_log "Flatpak | Update is skipped."
+  else
+    run_command "Flatpak" "sudo flatpak -y"
+  fi
+}
+
+function flatpak_remove_unused() {
+  if $config_skip_flatpak_remove_unused; then
+    side_log "Flatpak | Remove unused is skipped."
+  else
+    run_command "Flatpak" "sudo flatpak uninstall --unused -y"
   fi
 }
 

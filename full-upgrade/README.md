@@ -1,21 +1,25 @@
 Distro independent customizable system upgrade script, written with Bash.
 
-### Supported software
+### Steps
+1. Runs **[APT](https://manpages.ubuntu.com/manpages/xenial/man8/apt.8.html) - package manager.** 
+   Script updates packages and cleans orphans & caches.
+2. Runs **[pacman-mirrors](https://wiki.manjaro.org/index.php/Pacman-mirrors) - mirror updater for Manjaro.**
+   Script searches for the best mirrors available.
+3. Runs **[Pamac](https://wiki.manjaro.org/index.php/Pamac) - package manager for Manjaro.**
+   Script updates packages and cleans orphans & caches (AUR included).
+4. Runs **[Ferium](https://github.com/gorilla-devs/ferium) - Minecraft mod manager.**
+   Script updates mods (only for selected profile - ferium restriction).
+5. Runs **[SDKMAN](https://sdkman.io/) - SDK manager.**
+   Script updates downloaded SDKs and clean cache.
+   Also updates SDKMAN itself.
+6. Runs **[BleachBit](https://www.bleachbit.org/) - system cleaning software.**
+   Script cleans a lot of junk from many applications.
+   Is uses all available clean options which **will not delete sensitive data**, like browser sessions.
+   Only junk.
+7. Runs **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility, included in the Linux kernel.**
+   Script sends TRIM to the all supported devices, ignoring unsupported ones.
 
-1. **[APT](https://manpages.ubuntu.com/manpages/xenial/man8/apt.8.html) - package manager.** It updates packages and
-   cleans orphans & caches.
-2. **[Pamac](https://wiki.manjaro.org/index.php/Pamac) - package manager.** It updates packages and cleaning orphans &
-   caches (AUR included).
-3. **[pacman-mirrors](https://wiki.manjaro.org/index.php/Pacman-mirrors) - mirror updater for Manjaro.** It searches for
-   best mirrors available.
-4. **[Ferium](https://github.com/gorilla-devs/ferium) - Minecraft mod manager.** It updates mods (only for selected
-   profile).
-5. **[SDKMAN](https://sdkman.io/) - SDK manager.** It updates downloaded SDKs and cleans cache.
-6. **[BleachBit](https://www.bleachbit.org/) - system cleaning software.** It cleans a lot of junk from many
-   applications.
-7. **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility.** Included in the Linux kernel.
-
-**You don't need to install anything to run this script - unavailable software will be just ignored.**
+**You don't need to install anything to run this script; unavailable software will be just ignored.**
 
 ### `sudo` policy
 
@@ -29,7 +33,7 @@ access to script, you can disable all commands that require superuser access via
 
 **Common:**
 
-- `--allow-root` allow running script as root.
+- `--allow-root` allow running script as root. Note that some programs like SDKMAN are being installed as user, so may not work.
 - `--avoid-sudo` don't call commands that potentially will require superuser password, such as `sudo`.
 
 **APT:**
@@ -70,7 +74,8 @@ access to script, you can disable all commands that require superuser access via
 
 **fstrim:**
 
-- `--skip-fstrim` don't send TRIM to SSDs.
+- `--run-fstrim` send TRIM to supported devises. Disabled by default
+  because [frequently TRIM usage can be harmful for your SSD](https://man7.org/linux/man-pages/man8/fstrim.8.html).
 
 ### Usage:
 
@@ -79,6 +84,3 @@ You can run this script without saving to disk with something like this:
 ```bash
 curl -s -L https://github.com/BlackBaroness/my-linux-scripts/raw/master/full-upgrade/script.sh | bash -s -- --skip-fstrim
 ```
-
-Please note
-that [frequently TRIM usage can be harmful for your SSD](https://man7.org/linux/man-pages/man8/fstrim.8.html).

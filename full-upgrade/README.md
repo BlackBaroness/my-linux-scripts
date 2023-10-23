@@ -14,14 +14,16 @@ Distro independent customizable system upgrade script, written with Bash.
 6. Runs **[SDKMAN](https://sdkman.io/) - SDK manager.**
    Script updates downloaded SDKs and clean cache.
    Also updates SDKMAN itself.
-7. Runs **[Ferium](https://github.com/gorilla-devs/ferium) - Minecraft mod manager.**
+7. Runs **[asdf](https://asdf-vm.com/) - runtime version manager.**
+   Script updates all installed plugins and asdf itself.
+8. Runs **[Ferium](https://github.com/gorilla-devs/ferium) - Minecraft mod manager.**
    Script updates mods (only for selected profile - ferium restriction).
-8. Runs **[BleachBit](https://www.bleachbit.org/) - system cleaning software.**
+9. Runs **[BleachBit](https://www.bleachbit.org/) - system cleaning software.**
    Script cleans a lot of junk from many applications.
    It uses all available clean options which **will not delete sensitive data**, like browser sessions.
    Only junk.
-9. Runs **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility, included in the Linux kernel.**
-   Script sends TRIM to the all supported devices, ignoring unsupported ones.
+10. Runs **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility, included in the Linux kernel.**
+    Script sends TRIM to the all supported devices, ignoring unsupported ones.
 
 **You don't need to install anything to run this script; unavailable software will be just ignored.**
 
@@ -76,6 +78,12 @@ access to script, you can disable all commands that require superuser access via
 - `--skip-sdkman-update` do not update SDKMAN candidates list.
 - `--skip-sdkman-upgrade` do not upgrade SDKMAN candidates.
 - `--skip-sdkman-clean` do not clean SDKMAN.
+
+**asdf:**
+
+- `--skip-asdf` do not touch asdf at all.
+- `--skip-asdf-update-itself` do not run `asdf update`.
+- `--skip-asdf-update-plugins` do not update plugins.
 
 **Ferium:**
 

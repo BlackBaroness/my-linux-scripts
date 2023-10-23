@@ -28,6 +28,9 @@ function main() {
   wide_log "Running SDKMAN..."
   run_sdkman
 
+  wide_log "Running asdf..."
+  run_asdf
+
   wide_log "Running ferium..."
   run_ferium
 
@@ -80,6 +83,9 @@ function load_configuration() {
     global config_skip_sdkman_update=false
     global config_skip_sdkman_upgrade=false
     global config_skip_sdkman_clean=false
+    global config_skip_asdf=false
+    global config_skip_asdf_update_self=false
+    global config_skip_asdf_update_plugins=false
     global config_skip_ferium=false
     global config_skip_bleachbit=false
     global config_skip_bleachbit_current=false
@@ -111,6 +117,9 @@ function load_configuration() {
       --skip-sdkman-update) config_skip_sdkman_update=true ;;
       --skip-sdkman-upgrade) config_skip_sdkman_upgrade=true ;;
       --skip-sdkman-clean) config_skip_sdkman_clean=true ;;
+      --skip-asdf) config_skip_asdf=true ;;
+      --skip-asdf-update-self) config_skip_asdf_update_self=true ;;
+      --skip-asdf-update-plugins) config_skip_asdf_update_plugins=true ;;
       --skip-ferium) config_skip_ferium=true ;;
       --skip-bleachbit) config_skip_bleachbit=true ;;
       --skip-bleachbit-current) config_skip_bleachbit_current=true ;;
@@ -303,20 +312,6 @@ function run_pacman_mirrors() {
 }
 
 # =================================================================
-# ferium
-# =================================================================
-
-function run_ferium() {
-  if $config_skip_ferium; then
-    side_log "Ferium is skipped."
-  elif ! command -v ferium >/dev/null; then
-    side_log "Ferium is not installed, skipping..."
-  else
-    run_command "Ferium" "ferium upgrade"
-  fi
-}
-
-# =================================================================
 # SDKMAN
 # =================================================================
 
@@ -363,6 +358,51 @@ function sdkman_clean() {
     side_log "SDKMAN clean is skipped."
   else
     run_command "SDKMAN" "sdk flush"
+  fi
+}
+
+# =================================================================
+# asdf
+# =================================================================
+
+function run_asdf() {
+  if $config_skip_asdf; then
+    side_log "asdf is skipped."
+  elif ! command -v asdf >/dev/null; then
+    side_log "asdf is not installed, skipping..."
+  else
+    asdf_update_itself
+    asdf_update_plugins
+  fi
+}
+
+function asdf_update_itself() {
+  if $config_skip_asdf_update_self; then
+    side_log "asdf selfupdate is skipped."
+  else
+    run_command "asdf" "asdf update"
+  fi
+}
+
+function asdf_update_plugins() {
+  if $config_skip_asdf_update_plugins; then
+    side_log "asdf plugins update is skipped."
+  else
+    run_command "asdf" "asdf plugin update --all"
+  fi
+}
+
+# =================================================================
+# ferium
+# =================================================================
+
+function run_ferium() {
+  if $config_skip_ferium; then
+    side_log "Ferium is skipped."
+  elif ! command -v ferium >/dev/null; then
+    side_log "Ferium is not installed, skipping..."
+  else
+    run_command "Ferium" "ferium upgrade"
   fi
 }
 

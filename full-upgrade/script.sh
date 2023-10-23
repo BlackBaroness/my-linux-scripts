@@ -25,11 +25,11 @@ function main() {
   wide_log "Running Flatpak..."
   run_flatpak
 
-  wide_log "Running ferium..."
-  run_ferium
-
   wide_log "Running SDKMAN..."
   run_sdkman
+
+  wide_log "Running ferium..."
+  run_ferium
 
   wide_log "Running BleachBit..."
   run_bleachbit
@@ -75,12 +75,12 @@ function load_configuration() {
     global config_skip_flatpak=false
     global config_skip_flatpak_update=false
     global config_skip_flatpak_remove_unused=false
-    global config_skip_ferium=false
     global config_skip_sdkman=false
     global config_skip_sdkman_selfupdate=false
     global config_skip_sdkman_update=false
     global config_skip_sdkman_upgrade=false
     global config_skip_sdkman_clean=false
+    global config_skip_ferium=false
     global config_skip_bleachbit=false
     global config_skip_bleachbit_current=false
     global config_skip_bleachbit_sudo=false
@@ -106,12 +106,12 @@ function load_configuration() {
       --skip-flatpak) config_skip_flatpak=true ;;
       --skip-flatpak-update) config_skip_flatpak_update=true ;;
       --skip-flatpak-remove-unused) config_skip_flatpak_remove_unused=true ;;
-      --skip-ferium) config_skip_ferium=true ;;
       --skip-sdkman) config_skip_sdkman=true ;;
       --skip-sdkman-selfupdate) config_skip_sdkman_selfupdate=true ;;
       --skip-sdkman-update) config_skip_sdkman_update=true ;;
       --skip-sdkman-upgrade) config_skip_sdkman_upgrade=true ;;
       --skip-sdkman-clean) config_skip_sdkman_clean=true ;;
+      --skip-ferium) config_skip_ferium=true ;;
       --skip-bleachbit) config_skip_bleachbit=true ;;
       --skip-bleachbit-current) config_skip_bleachbit_current=true ;;
       --skip-bleachbit-sudo) config_skip_bleachbit_sudo=true ;;

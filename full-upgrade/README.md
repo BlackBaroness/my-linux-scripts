@@ -11,11 +11,11 @@ Distro independent customizable system upgrade script, written with Bash.
    Script updates packages and cleans orphans & caches (AUR included).
 5. Runs **[Flatpak](https://flatpak.org/) - package manager.**
    Script updates packages and removed unused dependencies.
-6. Runs **[Ferium](https://github.com/gorilla-devs/ferium) - Minecraft mod manager.**
-   Script updates mods (only for selected profile - ferium restriction).
-7. Runs **[SDKMAN](https://sdkman.io/) - SDK manager.**
+6. Runs **[SDKMAN](https://sdkman.io/) - SDK manager.**
    Script updates downloaded SDKs and clean cache.
    Also updates SDKMAN itself.
+7. Runs **[Ferium](https://github.com/gorilla-devs/ferium) - Minecraft mod manager.**
+   Script updates mods (only for selected profile - ferium restriction).
 8. Runs **[BleachBit](https://www.bleachbit.org/) - system cleaning software.**
    Script cleans a lot of junk from many applications.
    It uses all available clean options which **will not delete sensitive data**, like browser sessions.
@@ -69,10 +69,6 @@ access to script, you can disable all commands that require superuser access via
 - `--skip-flatpak-update` do not touch update packages.
 - `--skip-flatpak-remove-unused` do not remove unused dependencies.
 
-**Ferium:**
-
-- `--skip-ferium` do not touch Ferium at all.
-
 **SDKMAN:**
 
 - `--skip-sdkman` do not touch SDKMAN at all.
@@ -80,6 +76,10 @@ access to script, you can disable all commands that require superuser access via
 - `--skip-sdkman-update` do not update SDKMAN candidates list.
 - `--skip-sdkman-upgrade` do not upgrade SDKMAN candidates.
 - `--skip-sdkman-clean` do not clean SDKMAN.
+
+**Ferium:**
+
+- `--skip-ferium` do not touch Ferium at all.
 
 **BleachBit:**
 

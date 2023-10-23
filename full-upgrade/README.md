@@ -18,11 +18,13 @@ Distro independent customizable system upgrade script, written with Bash.
    Script updates all installed plugins and asdf itself.
 8. Runs **[Ferium](https://github.com/gorilla-devs/ferium) - Minecraft mod manager.**
    Script updates mods (only for selected profile - ferium restriction).
-9. Runs **[BleachBit](https://www.bleachbit.org/) - system cleaning software.**
-   Script cleans a lot of junk from many applications.
-   It uses all available clean options which **will not delete sensitive data**, like browser sessions.
-   Only junk.
-10. Runs **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility, included in the Linux kernel.**
+9. Runs **[Gradle](https://gradle.org/) - build automation tool.**
+   Script stops all daemons, and then, if you want, deletes caches.
+10. Runs **[BleachBit](https://www.bleachbit.org/) - system cleaning software.**
+    Script cleans a lot of junk from many applications.
+    It uses all available clean options which **will not delete sensitive data**, like browser sessions.
+    Only junk.
+11. Runs **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility, included in the Linux kernel.**
     Script sends TRIM to the all supported devices, ignoring unsupported ones.
 
 **You don't need to install anything to run this script; unavailable software will be just ignored.**
@@ -88,6 +90,12 @@ access to script, you can disable all commands that require superuser access via
 **Ferium:**
 
 - `--skip-ferium` do not touch Ferium at all.
+
+**Gradle:**
+
+- `--skip-gradle` do not touch Gradle at all.
+- `--skip-gradle-stop` do not stop Gradle daemons.
+- `--run-gradle-clean` runs `rm -rf ~/.gradle/caches/`.
 
 **BleachBit:**
 

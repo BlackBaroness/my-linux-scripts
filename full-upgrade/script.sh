@@ -34,6 +34,9 @@ function main() {
   wide_log "Running ferium..."
   run_ferium
 
+  wide_log "Running Gradle..."
+  run_gradle
+
   wide_log "Running BleachBit..."
   run_bleachbit
 
@@ -87,6 +90,9 @@ function load_configuration() {
     global config_skip_asdf_update_self=false
     global config_skip_asdf_update_plugins=false
     global config_skip_ferium=false
+    global config_skip_gradle=false
+    global config_skip_gradle_stop=false
+    global config_run_gradle_clean=false
     global config_skip_bleachbit=false
     global config_skip_bleachbit_current=false
     global config_skip_bleachbit_sudo=false
@@ -121,6 +127,9 @@ function load_configuration() {
       --skip-asdf-update-self) config_skip_asdf_update_self=true ;;
       --skip-asdf-update-plugins) config_skip_asdf_update_plugins=true ;;
       --skip-ferium) config_skip_ferium=true ;;
+      --skip-gradle) config_skip_gradle=true ;;
+      --skip-gradle-stop) config_skip_gradle_stop=true ;;
+      --run-gradle-clean) config_run_gradle_clean=true ;;
       --skip-bleachbit) config_skip_bleachbit=true ;;
       --skip-bleachbit-current) config_skip_bleachbit_current=true ;;
       --skip-bleachbit-sudo) config_skip_bleachbit_sudo=true ;;
@@ -406,7 +415,40 @@ function run_ferium() {
   fi
 }
 
+# =================================================================
+# Gradle
+# =================================================================
+
+function run_gradle() {
+  if $config_skip_gradle; then
+    side_log "Gradle is skipped."
+  elif ! command -v gradle >/dev/null; then
+    side_log "Gradle is not installed, skipping..."
+  else
+    gradle_stop
+    gradle_clean
+  fi
+}
+
+function gradle_stop() {
+    if $config_skip_gradle_stop; then
+      side_log "Gradle | Daemon stop is skipped."
+    else
+      run_command "Gradle" "gradle --stop"
+    fi
+}
+
+function gradle_clean() {
+    if $config_run_gradle_clean; then
+      run_command "Gradle" "rm -rf ~/.gradle/caches/"
+    else
+      side_log "Gradle | Cache clean is skipped."
+    fi
+}
+
+# =================================================================
 # BleachBit
+# =================================================================
 
 function run_bleachbit() {
   if $config_skip_bleachbit; then

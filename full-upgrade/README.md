@@ -21,7 +21,7 @@ Distro independent customizable system upgrade script, written with Bash.
 
 **You don't need to install anything to run this script; unavailable software will be just ignored.**
 
-### `sudo` policy
+### Root policy
 
 By default, this script discards running as root because of security.
 You can disable this requirement via configuration.
@@ -33,7 +33,7 @@ access to script, you can disable all commands that require superuser access via
 
 **Common:**
 
-- `--allow-root` allow running script as root. Note that some programs like SDKMAN are being installed as user, so may not work.
+- `--allow-root` allow running the script as root. Note that some programs like SDKMAN are being installed as user, so may not work.
 - `--avoid-sudo` don't call commands that potentially will require superuser password, such as `sudo`.
 
 **APT:**

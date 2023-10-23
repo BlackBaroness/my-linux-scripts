@@ -3,20 +3,22 @@ Distro independent customizable system upgrade script, written with Bash.
 ### Steps
 1. Runs **[APT](https://manpages.ubuntu.com/manpages/xenial/man8/apt.8.html) - package manager.** 
    Script updates packages and cleans orphans & caches.
-2. Runs **[pacman-mirrors](https://wiki.manjaro.org/index.php/Pacman-mirrors) - mirror updater for Manjaro.**
+2. Runs **[Zypper](https://documentation.suse.com/smart/systems-management/html/concept-zypper/index.html) - OpenSUSE package manager.**
+   Script updates packages.
+3. Runs **[pacman-mirrors](https://wiki.manjaro.org/index.php/Pacman-mirrors) - mirror updater for Manjaro.**
    Script searches for the best mirrors available.
-3. Runs **[Pamac](https://wiki.manjaro.org/index.php/Pamac) - package manager for Manjaro.**
+4. Runs **[Pamac](https://wiki.manjaro.org/index.php/Pamac) - package manager for Manjaro.**
    Script updates packages and cleans orphans & caches (AUR included).
-4. Runs **[Ferium](https://github.com/gorilla-devs/ferium) - Minecraft mod manager.**
+5. Runs **[Ferium](https://github.com/gorilla-devs/ferium) - Minecraft mod manager.**
    Script updates mods (only for selected profile - ferium restriction).
-5. Runs **[SDKMAN](https://sdkman.io/) - SDK manager.**
+6. Runs **[SDKMAN](https://sdkman.io/) - SDK manager.**
    Script updates downloaded SDKs and clean cache.
    Also updates SDKMAN itself.
-6. Runs **[BleachBit](https://www.bleachbit.org/) - system cleaning software.**
+7. Runs **[BleachBit](https://www.bleachbit.org/) - system cleaning software.**
    Script cleans a lot of junk from many applications.
-   Is uses all available clean options which **will not delete sensitive data**, like browser sessions.
+   It uses all available clean options which **will not delete sensitive data**, like browser sessions.
    Only junk.
-7. Runs **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility, included in the Linux kernel.**
+8. Runs **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility, included in the Linux kernel.**
    Script sends TRIM to the all supported devices, ignoring unsupported ones.
 
 **You don't need to install anything to run this script; unavailable software will be just ignored.**
@@ -44,6 +46,11 @@ access to script, you can disable all commands that require superuser access via
 - `--skip-apt-autoremove` do not run `apt autoremove`.
 - `--skip-apt-clean` do not run `apt clean`.
 
+**Zypper:**
+- `--skip-zypper` do not touch Zypper at all.
+- `--skip-zypper-ref` do not run `zypper ref`.
+- `--skip-zypper-upgrade` do not run `zypper dist-upgrade`.
+
 **Pamac:**
 
 - `--skip-pamac` do not touch Pamac at all.
@@ -52,7 +59,7 @@ access to script, you can disable all commands that require superuser access via
 
 **pacman-mirrors:**
 
-- `--skip-pacman-mirrors` do not update mirrors list.
+- `--skip-pacman-mirrors` do not update a mirrors list.
 
 **Ferium:**
 

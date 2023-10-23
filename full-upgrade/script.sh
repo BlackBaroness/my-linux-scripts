@@ -13,6 +13,9 @@ function main() {
   wide_log "Running APT..."
   run_apt
 
+  wide_log "Running Zypper..."
+  run_zypper
+
   wide_log "Running pacman-mirrors..."
   run_pacman_mirrors
 
@@ -59,7 +62,9 @@ function load_configuration() {
     global config_skip_apt_update=false
     global config_skip_apt_upgrade=false
     global config_skip_apt_autoremove=false
-    global config_skip_apt_clean=false
+    global config_skip_zypper=false
+    global config_skip_zypper_ref=false
+    global config_skip_zypper_upgrade=false
     global config_skip_pamac=false
     global config_skip_pamac_upgrade=false
     global config_skip_pamac_cleanup=false
@@ -85,6 +90,9 @@ function load_configuration() {
       --skip-apt-upgrade) config_skip_apt_upgrade=true ;;
       --skip-apt-autoremove) config_skip_apt_autoremove=true ;;
       --skip-apt-clean) config_skip_apt_clean=true ;;
+      --skip-zypper) config_skip_zypper=true ;;
+      --skip-zypper-ref) config_skip_zypper_ref=true ;;
+      --skip-zypper-upgrade) config_skip_zypper_upgrade=true ;;
       --skip-pamac) config_skip_pamac=true ;;
       --skip-pamac-upgrade) config_skip_pamac_upgrade=true ;;
       --skip-pamac-cleanup) config_skip_pamac_cleanup=true ;;
@@ -164,6 +172,41 @@ function apt_clean() {
     side_log "APT | Clean is skipped."
   else
     run_command "APT" "sudo apt clean"
+  fi
+}
+
+# =================================================================
+# Zypper
+# =================================================================
+
+function run_zypper() {
+  if $config_skip_zypper; then
+    side_log "Zypper is skipped."
+  elif ! command -v zypper >/dev/null; then
+    side_log "Zypper is not installed, skipping..."
+  elif $config_avoid_sudo; then
+    side_log "Zypper not available because you avoid commands with sudo."
+  else
+    apt_update
+    apt_upgrade
+    apt_autoremove
+    apt_clean
+  fi
+}
+
+function zypper_ref() {
+  if $config_skip_zypper_ref; then
+    side_log "Zypper | Refresh is skipped."
+  else
+    run_command "Zypper" "sudo zypper ref"
+  fi
+}
+
+function zypper_upgrade() {
+  if $config_skip_zypper_upgrade; then
+    side_log "Zypper | Update is skipped."
+  else
+    run_command "Zypper" "sudo zypper dist-upgrade -y"
   fi
 }
 

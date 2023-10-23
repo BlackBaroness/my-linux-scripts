@@ -24,7 +24,9 @@ Distro independent customizable system upgrade script, written with Bash.
     Script cleans a lot of junk from many applications.
     It uses all available clean options which **will not delete sensitive data**, like browser sessions.
     Only junk.
-11. Runs **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility, included in the Linux kernel.**
+11. Runs some post-upgrade actions, such as wiping `~/.cache`.
+    By default, the script doesn't do anything; you need to manually enable such functions.
+12. Runs **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility, included in the Linux kernel.**
     Script sends TRIM to the all supported devices, ignoring unsupported ones.
 
 **You don't need to install anything to run this script; unavailable software will be just ignored.**
@@ -102,6 +104,11 @@ access to script, you can disable all commands that require superuser access via
 - `--skip-bleachbit` do not touch BleachBit at all.
 - `--skip-bleachbit-current` do not run BleachBit with current user.
 - `--skip-bleachbit-sudo` do not run BleachBit with `sudo`.
+
+**Post-upgrade actions:**
+
+- `--wipe-user-cache` runs `rm -rf ~/.cache`.
+- `--wipe-root-cache` runs `sudo rm -rf /root/.cache`.
 
 **fstrim:**
 

@@ -40,6 +40,9 @@ function main() {
   wide_log "Running BleachBit..."
   run_bleachbit
 
+  wide_log "Running post-upgrade actions..."
+  run_postupgrade
+
   wide_log "Running fstrim..."
   config_run_fstrim
 
@@ -96,6 +99,8 @@ function load_configuration() {
     global config_skip_bleachbit=false
     global config_skip_bleachbit_current=false
     global config_skip_bleachbit_sudo=false
+    global config_wipe_user_cache=false
+    global config_wipe_root_cache=false
     global config_run_fstrim=false
 
     options=$*
@@ -133,6 +138,8 @@ function load_configuration() {
       --skip-bleachbit) config_skip_bleachbit=true ;;
       --skip-bleachbit-current) config_skip_bleachbit_current=true ;;
       --skip-bleachbit-sudo) config_skip_bleachbit_sudo=true ;;
+      --wipe-user-cache) config_wipe_user_cache=true ;;
+      --wipe-root-cache) config_wipe_root_cache=true ;;
       --run-fstrim) config_run_fstrim=true ;;
       *) echo "Unknown option $argument" >&2 && exit 1 ;;
       esac
@@ -474,7 +481,23 @@ function run_bleachbit() {
   fi
 }
 
+# =================================================================
+# Post-upgrade actions
+# =================================================================
+
+function run_postupgrade() {
+  if $config_wipe_user_cache; then
+    run_command "Post-upgrade" "rm -rf ~/.cache"
+  fi
+
+  if $config_wipe_root_cache && ! $config_avoid_sudo; then
+    run_command "Post-upgrade" "sudo rm -rf /root/.cache"
+  fi
+}
+
+# =================================================================
 # fstrim
+# =================================================================
 
 function run_fstrim() {
   if [ "$config_run_fstrim" = false ]; then
@@ -485,6 +508,8 @@ function run_fstrim() {
     run_command "fstrim" "sudo fstrim --all --verbose --quiet-unsupported"
   fi
 }
+
+
 
 # ===========================================
 

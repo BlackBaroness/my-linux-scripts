@@ -1,4 +1,4 @@
-Distro independent customizable system upgrade script, written with Bash.
+Distro independent customizable system upgrade + clean script, written with Bash.
 
 ### Steps
 1. Runs **[APT](https://manpages.ubuntu.com/manpages/xenial/man8/apt.8.html) - package manager.** 
@@ -38,6 +38,20 @@ You can disable this requirement via configuration.
 
 At the same time, script uses `sudo` for commands that need it. If you don't know root password or don't want to give
 access to script, you can disable all commands that require superuser access via configuration.
+
+### Usage:
+1. Remove some junk manually: look at the Downloads folder, empty Trash etc
+2. Update things which cannot be updated by script: KDE addons with Discover, oh-my-zsh and its plugins, etc
+3. (RECOMMENDED) Logout from your DE and switch to tty (CTRL + ALT + F4 on most distros).
+   This is important because upgrade and cache cleaning can break some graphical programs, but they will work
+   after restart.
+4. Call `curl -s -L https://github.com/BlackBaroness/my-linux-scripts/raw/master/full-upgrade/script.sh | bash -s -- --run-fstrim`
+   as normal user, not root.
+   Pass arguments at the end of line, like `--run-fstrim` passed.
+5. Restart your computer, using `sudo reboot`.
+
+**Do not clean your system too frequently, this doesn't make any sense and can affect performance negatively.
+It's good practice to run script once a 2 weeks, or just when big update comes out.**
 
 ### Configuration:
 

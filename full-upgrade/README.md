@@ -1,9 +1,11 @@
 Distro independent customizable system upgrade + clean script, written with Bash.
 
 ### Steps
-1. Runs **[APT](https://manpages.ubuntu.com/manpages/xenial/man8/apt.8.html) - package manager.** 
+
+1. Runs **[APT](https://manpages.ubuntu.com/manpages/xenial/man8/apt.8.html) - package manager.**
    Script updates packages and cleans orphans & caches.
-2. Runs **[Zypper](https://documentation.suse.com/smart/systems-management/html/concept-zypper/index.html) - OpenSUSE package manager.**
+2. Runs **[Zypper](https://documentation.suse.com/smart/systems-management/html/concept-zypper/index.html) - OpenSUSE
+   package manager.**
    Script updates packages.
 3. Runs **[pacman-mirrors](https://wiki.manjaro.org/index.php/Pacman-mirrors) - mirror updater for Manjaro.**
    Script searches for the best mirrors available.
@@ -26,7 +28,8 @@ Distro independent customizable system upgrade + clean script, written with Bash
     Only junk.
 11. Runs some post-upgrade actions, such as wiping `~/.cache`.
     By default, the script doesn't do anything; you need to manually enable such functions.
-12. Runs **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility, included in the Linux kernel.**
+12. Runs **[fstrim](https://man7.org/linux/man-pages/man8/fstrim.8.html) - SSD TRIM utility, included in the Linux
+    kernel.**
     Script sends TRIM to the all supported devices, ignoring unsupported ones.
 
 **You don't need to install anything to run this script; unavailable software will be just ignored.**
@@ -40,14 +43,16 @@ At the same time, script uses `sudo` for commands that need it. If you don't kno
 access to script, you can disable all commands that require superuser access via configuration.
 
 ### Usage:
-1. Remove some junk manually: look at the Downloads folder, empty Trash etc
+
+1. Remove some junk manually: look at the Downloads folder, empty Trash, delete unused app data
+   with [Flatsweep](https://flathub.org/apps/io.github.giantpinkrobots.flatsweep) etc.
 2. Update things which cannot be updated by script: KDE addons with Discover, oh-my-zsh and its plugins, etc
 3. (RECOMMENDED) Logout from your DE and switch to tty (CTRL + ALT + F4 on most distros).
    This is important because upgrade and cache cleaning can break some graphical programs, but they will work
    after restart.
 4. Call `curl -s -L https://github.com/BlackBaroness/my-linux-scripts/raw/master/full-upgrade/script.sh | bash -s -- --run-fstrim`
-   as normal user, not root.
-   Pass arguments at the end of line, like `--run-fstrim` passed.
+as normal user, not root.
+Pass arguments at the end of line, like `--run-fstrim` passed.
 5. Restart your computer, using `sudo reboot`.
 
 **Do not clean your system too frequently, this doesn't make any sense and can affect performance negatively.
@@ -57,7 +62,8 @@ It's good practice to run script once a 2 weeks, or just when big update comes o
 
 **Common:**
 
-- `--allow-root` allow running the script as root. Note that some programs like SDKMAN are being installed as user, so may not work.
+- `--allow-root` allow running the script as root. Note that some programs like SDKMAN are being installed as user, so
+  may not work.
 - `--avoid-sudo` don't call commands that potentially will require superuser password, such as `sudo`.
 
 **APT:**
@@ -69,6 +75,7 @@ It's good practice to run script once a 2 weeks, or just when big update comes o
 - `--skip-apt-clean` do not run `apt clean`.
 
 **Zypper:**
+
 - `--skip-zypper` do not touch Zypper at all.
 - `--skip-zypper-ref` do not run `zypper ref`.
 - `--skip-zypper-upgrade` do not run `zypper dist-upgrade`.

@@ -44,7 +44,7 @@ function main() {
   run_postupgrade
 
   wide_log "Running fstrim..."
-  config_run_fstrim
+  run_fstrim
 
   wide_log "Upgrade completed!"
 }
